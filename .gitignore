@@ -1,0 +1,6 @@
+venv/ 
+dataset/ 
+results/ 
+__pycache__/ 
+*.pyc 
+model/*.h5 

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Medical X-Ray Classifier</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(to right, #1f4037, #99f2c8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            width: 450px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: #1f4037;
+            font-size: 26px;
+        }
+
+        h2 {
+            margin-top: 5px;
+            font-size: 16px;
+            font-weight: normal;
+            color: gray;
+        }
+
+        .upload-section {
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            margin: 15px 0;
+        }
+
+        button {
+            padding: 10px 25px;
+            background-color: #1f4037;
+            border: none;
+            color: white;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #16332c;
+        }
+
+        img {
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f1f1f1;
+        }
+
+        .prediction {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .normal {
+            color: green;
+        }
+
+        .pneumonia {
+            color: red;
+        }
+
+        .confidence {
+            font-size: 14px;
+            color: #444;
+        }
+
+        .footer {
+            margin-top: 15px;
+            font-size: 12px;
+            color: gray;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>AI Powered Chest X-Ray Analysis</h1>
+    <h2>Deep Learning Based Pneumonia Detection System</h2>
+
+    <div class="upload-section">
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" required><br>
+            <button type="submit">Analyze X-Ray</button>
+        </form>
+    </div>
+
+    {% if image_file %}
+        <img src="{{ url_for('static', filename=image_file) }}" width="300">
+    {% endif %}
+
+    {% if prediction %}
+    <div class="result-box">
+
+        <div class="prediction 
+            {% if prediction.strip().upper() == 'PNEUMONIA' %}
+                pneumonia
+            {% else %}
+                normal
+            {% endif %}
+        ">
+            Result: {{ prediction }}
+        </div>
+
+        <div class="confidence">
+            {{ confidence }}
+        </div>
+
+    </div>
+    {% endif %}
+
+    <div class="footer">
+        Developed using CNN & Flask
+    </div>
+
+</div>
+
+</body>
+</html>
